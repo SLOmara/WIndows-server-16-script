@@ -1,0 +1,116 @@
+@echo off
+echo Run as administrator
+net sessions
+if %errorlevel%==0 (
+echo Success!
+) else (
+echo NO admin, please run with Administrative rights...
+pause
+exit
+)
+:Menu
+echo Pick one:
+echo 1. Password policy
+echo 2. Lock out policy
+echo 3. Locate mp3
+echo 4. System integrity scan
+echo 5. Locate jpg
+echo 6. Enable Firewall
+ehco 7. Delete media files 
+ehco 8. Find spooky files
+
+CHOICE /C 12345678 /M "Enter your choice:"
+if ERRORLEVEL 8 goto Eight
+if ERRORLEVEL 7 goto Seven
+if ERRORLEVEL 6 goto Six
+if ERRORLEVEL 5 goto Five
+if ERRORLEVEL 4 goto Four
+if ERRORLEVEL 3 goto Three
+if ERRORLEVEL 2 goto Two
+if ERRORLEVEL 1 goto One
+:One
+echo Done, Changing PP Now
+REM Passwords must be changed every 30 days
+net accounts /maxpwage:30
+REM Passwords can’t be changed before 5 days
+net accounts /minpwage:5
+REM Passwords must be 12 characters long
+net accounts /minpwlen:12
+REM Display current password policy
+echo Policy updated
+PAUSE
+net accounts
+goto Menu
+:Two
+echo Ok master let's fix da ho Lockout
+REM Account lockout duration 30 min
+net accounts /lockoutduration:30
+REM Lockout threshold to 5 bad logs
+net accounts /lockoutthreshold:5
+REM Lockout counter after 10 min
+net accounts /lockoutwindow:10
+REM Display current Lockout policy
+echo Lockout updated
+PAUSE
+Net accounts
+goto Menu
+:Three
+REM Locating mp3 files
+echo Finding mp3
+cd C:\Users
+dir *.mp3 /s /b
+REM Display mp3
+echo mp3 displayed
+PAUSE
+goto Menu
+:Four
+REM Start sys int scan
+echo Scanning sys now
+Sfc.exe /scannow
+PAUSE
+goto Menu
+:Five
+REM Locating jpg
+echo Finding jpg
+cd C:\Users
+dir *jpg /s /b
+REM Display jpg
+echo jpg path displayed
+PAUSE
+goto Menu
+:Six
+REM Enabling firewall
+echo Enabling firewall
+netsh advfirewall set allprofiles state on
+echo Firewall on
+PAUSE
+goto Menu
+:Seven
+REM Delete media files
+echo clearing media files out now
+del /s "%homedrive%\mediafiles.txt" /f /q
+del /s "%homedrive%\*.mp3" /f /q /a
+del /s "%homedrive%\*.mp4" /f /q /a
+del /s "%homedrive%\*.m4v" /f /q /a
+del /s "%homedrive%\*.wmv" /f /q /a
+del /s "%homedrive%\*.mid" /f /q /a
+del /s "%homedrive%\*.mov" /f /q /a
+del /s "%homedrive%\*.avi" /f /q /a
+del /s "%homedrive%\*.wma" /f /q /a
+del /s "%homedrive%\*.3gp" /f /q /a
+echo Media cleared 
+cd %homedrive%\
+dir /s /a /b /o-d *.mp3 *.mp4 *.avi *.wmv *.mid *.mov *.m4v *.3gp *.wma *.wav >> mediafiles.txt
+start mediafiles.txt
+PAUSE
+goto Menu
+:Eight
+REM Find the no no files
+echo Finding the spooky files
+appwiz.cpl
+cd %homedrive%\
+dir /s /a /b /o-d *.zip *.exe *.msi >> spookyfiles.txt
+start spookyfiles.txt
+PAUSE
+goto Menu
+PAUSE
