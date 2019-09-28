@@ -16,8 +16,8 @@ echo 3. Locate mp3
 echo 4. System integrity scan
 echo 5. Locate jpg
 echo 6. Enable Firewall
-ehco 7. Delete media files 
-ehco 8. Find spooky files
+echo 7. Delete media files 
+echo 8. Find spooky files
 echo 9. Disabling bad accounts
 
 CHOICE /C 123456789 /M "Enter your choice:"
