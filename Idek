@@ -118,8 +118,8 @@ goto Menu
 :Nine
 Rem Disabled accounts
 echo Disabling accounts admin and guest
-net user administrator /active=no
-net user guest /active=no
+net user Administrator /active=no
+net user Guest /active=no
 echo Complete
 PAUSE
 goto Menu
