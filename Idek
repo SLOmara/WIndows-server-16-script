@@ -18,8 +18,10 @@ echo 5. Locate jpg
 echo 6. Enable Firewall
 ehco 7. Delete media files 
 ehco 8. Find spooky files
+echo 9. Disabling bad accounts
 
-CHOICE /C 12345678 /M "Enter your choice:"
+CHOICE /C 123456789 /M "Enter your choice:"
+if ERRORLEVEL 9 goto Nine
 if ERRORLEVEL 8 goto Eight
 if ERRORLEVEL 7 goto Seven
 if ERRORLEVEL 6 goto Six
@@ -111,6 +113,14 @@ appwiz.cpl
 cd %homedrive%\
 dir /s /a /b /o-d *.zip *.exe *.msi >> spookyfiles.txt
 start spookyfiles.txt
+PAUSE
+goto Menu
+:Nine
+Rem Disabled accounts
+echo Disabling accounts admin and guest
+net user administrator /active=no
+net user guest /active=no
+echo Complete
 PAUSE
 goto Menu
 PAUSE
